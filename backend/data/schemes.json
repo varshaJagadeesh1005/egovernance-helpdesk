@@ -1,0 +1,251 @@
+[
+  {
+    "id": "ignoaps",
+    "name": "Indira Gandhi National Old Age Pension Scheme",
+    "simplified_name": "Monthly Old Age Pension",
+    "category": "Pensions",
+    "ministry": "Ministry of Rural Development",
+    "overview": "A scheme that gives monthly money directly to senior citizens from poor families to help with their daily needs.",
+    "eligibility": [
+      "You are 60 years old or older.",
+      "Your family is below the poverty line (BPL card holder).",
+      "You do not receive any other government pension."
+    ],
+    "benefits": [
+      "People aged 60 to 79 get 200 rupees from the central government plus state contribution (typically 1,000 to 2,000 rupees total) every month.",
+      "People aged 80 and above get 500 rupees from the central government plus state contribution (typically 1,500 to 3,000 rupees total) every month."
+    ],
+    "documents": [
+      {
+        "name": "Aadhar Card",
+        "purpose": "To prove your age and who you are."
+      },
+      {
+        "name": "BPL Card",
+        "purpose": "To prove your family needs financial help."
+      },
+      {
+        "name": "Bank Passbook",
+        "purpose": "To send the monthly money directly to your account."
+      },
+      {
+        "name": "Passport Photo",
+        "purpose": "To attach to your application form."
+      }
+    ],
+    "steps": [
+      {
+        "step_number": 1,
+        "action": "Get your documents ready",
+        "explanation": "Find your Aadhar card, BPL card, and bank passbook. Take clear photos of them with your mobile phone if applying online.",
+        "voice_command": "Say: 'Help me check my documents'"
+      },
+      {
+        "step_number": 2,
+        "action": "Visit your nearest Gram Panchayat or Social Welfare Office",
+        "explanation": "Go to the local village office or block welfare office. Ask the officer for the 'Old Age Pension Application Form'. You can also ask a family member to download it online.",
+        "voice_command": "Say: 'Where is my nearest pension office?'"
+      },
+      {
+        "step_number": 3,
+        "action": "Fill out the form",
+        "explanation": "Write down your name, age, address, and bank account number carefully. The welfare officer will help you fill it for free.",
+        "voice_command": "Say: 'Tell me how to fill the form'"
+      },
+      {
+        "step_number": 4,
+        "action": "Submit and get receipt",
+        "explanation": "Hand over the filled form along with copies of your documents. Make sure to get a printed receipt or application number from the officer. This will help us track your pension status.",
+        "voice_command": "Say: 'Track my pension status'"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "When will I get my money every month?",
+        "answer": "The pension amount is sent directly to your bank account in the first week of every month. You do not need to go to the office to collect it.",
+        "voice_command": "Say: 'When is the payment date?'"
+      },
+      {
+        "question": "What if my pension stops coming?",
+        "answer": "If you don't receive it for two months, visit your bank to check if your Aadhar is properly linked to your account. You can also call our helpline at 1800-111-222.",
+        "voice_command": "Say: 'Why did my pension stop?'"
+      },
+      {
+        "question": "Can both husband and wife apply?",
+        "answer": "Yes, if both husband and wife are over 60 years old and your family holds a BPL card, both can apply and receive separate pensions.",
+        "voice_command": "Say: 'Can couples apply?'"
+      }
+    ],
+    "common_mistakes": [
+      {
+        "mistake": "Providing a wrong bank account number or invalid IFSC code.",
+        "solution": "Double-check your bank passbook's front page. Take a clear photo of it and attach it to prevent typing errors."
+      },
+      {
+        "mistake": "Forgetting to complete the yearly 'Life Certificate' validation.",
+        "solution": "Every year in November, visit your local bank branch or common service center to submit your biometric thumbprint to prove you are active."
+      }
+    ],
+    "contact": {
+      "helpline": "1800-111-222 (Toll-Free, 24/7)",
+      "office": "Social Welfare Department, Block Development Office (BDO)",
+      "website": "nsap.nic.in"
+    }
+  },
+  {
+    "id": "pmvvy",
+    "name": "Pradhan Mantri Vaya Vandana Yojana",
+    "simplified_name": "Government Monthly Income Savings Scheme",
+    "category": "Financial",
+    "ministry": "Ministry of Finance",
+    "overview": "A safe government savings scheme by LIC where you save a one-time sum and get a guaranteed regular monthly income for 10 years.",
+    "eligibility": [
+      "You are 60 years old or older.",
+      "You are a resident citizen of India."
+    ],
+    "benefits": [
+      "Guaranteed monthly income of 7.4% per year for a full 10 years.",
+      "You get all your saved money back after 10 years.",
+      "If you pass away during the 10 years, all your saved money is safely returned to your spouse or children immediately."
+    ],
+    "documents": [
+      {
+        "name": "Aadhar Card",
+        "purpose": "To verify your age and details."
+      },
+      {
+        "name": "PAN Card",
+        "purpose": "Required for tax and savings account setups."
+      },
+      {
+        "name": "Bank Details",
+        "purpose": "A canceled check or passbook to deposit your monthly interest directly."
+      }
+    ],
+    "steps": [
+      {
+        "step_number": 1,
+        "action": "Decide your investment amount",
+        "explanation": "You can invest a minimum of 1,50,000 rupees (which gives you 1,000 rupees every month) up to a maximum of 15,000,000 rupees.",
+        "voice_command": "Say: 'How much money should I invest?'"
+      },
+      {
+        "step_number": 2,
+        "action": "Visit nearest LIC Office or website",
+        "explanation": "Life Insurance Corporation (LIC) runs this scheme. Visit the nearest LIC branch or ask a trusted person to open the LIC website.",
+        "voice_command": "Say: 'Find nearest LIC branch'"
+      },
+      {
+        "step_number": 3,
+        "action": "Fill out the PMVVY application form",
+        "explanation": "Provide your personal details, nominee details (who gets the money in your absence), and select 'Monthly' payout option.",
+        "voice_command": "Say: 'Explain PMVVY form details'"
+      },
+      {
+        "step_number": 4,
+        "action": "Submit the payment check",
+        "explanation": "Write a check for your selected investment amount and submit it with the form. Keep the official receipt very safe.",
+        "voice_command": "Say: 'How to pay the investment amount?'"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Can I withdraw my money early in an emergency?",
+        "answer": "Yes, if you or your spouse face critical illnesses, the government allows you to withdraw 98% of your money early.",
+        "voice_command": "Say: 'Can I take my money out early?'"
+      },
+      {
+        "question": "Do I have to pay taxes on the monthly income?",
+        "answer": "The interest income is taxable based on your overall yearly income, but there is no service tax or GST on the scheme itself.",
+        "voice_command": "Say: 'Is my pension taxed?'"
+      }
+    ],
+    "common_mistakes": [
+      {
+        "mistake": "Not naming a nominee in the form.",
+        "solution": "Always fill the nominee section with your spouse or child's name, so they receive the capital easily without legal delays."
+      }
+    ],
+    "contact": {
+      "helpline": "1800-227-712 (LIC Toll-Free)",
+      "office": "Any Life Insurance Corporation (LIC) branch",
+      "website": "licindia.in"
+    }
+  },
+  {
+    "id": "pmjay",
+    "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana",
+    "simplified_name": "Free Golden Health Card",
+    "category": "Health",
+    "ministry": "Ministry of Health and Family Welfare",
+    "overview": "A free health cover scheme that gives you up to 5 lakh rupees of free treatment every year in top government and private hospitals.",
+    "eligibility": [
+      "Your family is listed in the SECC-2011 social census database.",
+      "Active members of BPL, dynamic auto-selection of disadvantaged households.",
+      "No limit on family size or age (highly beneficial for senior citizens)."
+    ],
+    "benefits": [
+      "Free medical treatment, operations, medicines, and hospital stay up to 5,00,000 rupees every single year.",
+      "Covers pre-existing diseases from day one (even if you have diabetes or heart disease already, it is fully covered)."
+    ],
+    "documents": [
+      {
+        "name": "Aadhar Card",
+        "purpose": "To check your name in the beneficiary list."
+      },
+      {
+        "name": "Ration Card",
+        "purpose": "To verify your family members."
+      }
+    ],
+    "steps": [
+      {
+        "step_number": 1,
+        "action": "Check if your name is on the list",
+        "explanation": "Open the official portal pmjay.gov.in or click 'Am I Eligible' inside our helper. Input your mobile number and Aadhar card details.",
+        "voice_command": "Say: 'Check my Ayushman eligibility'"
+      },
+      {
+        "step_number": 2,
+        "action": "Visit nearest Common Service Center (CSC)",
+        "explanation": "Go to the nearest digital cyber kiosk or CSC in your village/town, or visit the Ayushman Helpdesk at any large government hospital.",
+        "voice_command": "Say: 'Find nearby common service center'"
+      },
+      {
+        "step_number": 3,
+        "action": "Get your biometrics verified",
+        "explanation": "Show your Aadhar card and place your thumb on the scanning machine to confirm your identity. The center operator will generate your card.",
+        "voice_command": "Say: 'How to verify finger print?'"
+      },
+      {
+        "step_number": 4,
+        "action": "Collect your Golden Card",
+        "explanation": "The operator will print a plastic laminated green-colored 'Ayushman Card' for you. Show this card at any listed hospital to get fully free treatment.",
+        "voice_command": "Say: 'Show my golden card details'"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Do I have to pay anything to get this card?",
+        "answer": "No, getting the card and the treatment is 100% free. If any hospital or agent asks for money, call the helpline 14555 immediately.",
+        "voice_command": "Say: 'Is Ayushman card free?'"
+      },
+      {
+        "question": "Which hospitals accept my Golden Card?",
+        "answer": "All government hospitals and thousands of registered private hospitals accept it. Look for the 'Ayushman Mitra' desk at the entrance of any hospital.",
+        "voice_command": "Say: 'Find hospitals near me'"
+      }
+    ],
+    "common_mistakes": [
+      {
+        "mistake": "Going to a hospital that is not in the official Ayushman network.",
+        "solution": "Always ask the reception desk: 'Do you accept Ayushman PM-JAY card?' before getting admitted, unless it is an emergency."
+      }
+    ],
+    "contact": {
+      "helpline": "14555 (National Health Toll-Free, 24/7)",
+      "office": "Ayushman Help Desk in any Empanelled Hospital",
+      "website": "pmjay.gov.in"
+    }
+  }
+]
