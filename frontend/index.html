@@ -1,13 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Citizen Helpdesk</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="high-contrast font-large">
+    <div class="container">
+        <!-- Header & Language Selection -->
+        <header class="header">
+            <h1 id="app-title">Senior Citizen Helpdesk</h1>
+            <div class="controls">
+                <select id="lang-selector">
+                    <option value="en-IN">English</option>
+                    <option value="hi-IN">हिंदी</option>
+                    <option value="kn-IN">ಕನ್ನಡ</option>
+                </select>
+                <button id="zoom-btn" title="Toggle Text Size">A±</button>
+            </div>
+        </header>
+
+        <div id="root"></div>
+    </div>
+
     <script type="module" src="/src/main.jsx"></script>
-  </body>
+</body>
 </html>

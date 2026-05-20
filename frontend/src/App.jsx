@@ -83,31 +83,38 @@ const TRANSLATED_TEMPLATES = {
   hindi: {
     greeting: "नमस्ते! मुझे आपकी मदद करने में बहुत खुशी हो रही है।",
     what_i_help: "मैं आपको इस योजना के बारे में बहुत आसान तरीके से समझाऊंगा।",
+    summary: "मैं सरकारी योजनाओं को आपके लिए सरल भाषा में समझाऊंगा।",
     next_step: "क्या आप हमारे किसी मददगार साथी से सीधे बात करना चाहेंगे? या मैं आपको अन्य कागजातों के बारे में बताऊं?"
   },
   tamil: {
     greeting: "வணக்கம்! உங்களுக்கு உதவுவதில் நான் மிகவும் மகிழ்ச்சியடைகிறேன்.",
     what_i_help: "இந்த திட்டத்தைப் பற்றி உங்களுக்கு எளிய முறையில் விளக்குகிறேன்.",
+    summary: "இந்த திட்டங்களை உங்கள் பயனுக்கு எளிதாக விளக்குகிறேன்.",
     next_step: "எங்கள் குழு உறுப்பினருடன் பேச விரும்புகிறீர்களா? அல்லது தேவையான ஆவணங்களை விளக்கவா?"
   },
   telugu: {
     greeting: "నమస్కారం! మీకు సహాయం చేయడం నాకు చాలా సంతోషంగా ఉంది.",
     what_i_help: "ఈ పథకం గురించి మీకు చాలా సులభంగా వివరిస్తాను.",
+    summary: "నేను ఈ పథకాలను మీకోసం సులభంగా వివరించగలను.",
     next_step: "మా బృంద సభ్యులతో మాట్లాడాలనుకుంటున్నారా? లేదా కావాల్సిన పత్రాల గురించి వివరించనా?"
   },
   kannada: {
     greeting: "ನಮಸ್ಕಾರ! ನಿಮಗೆ ಸಹಾಯ ಮಾಡಲು ನನಗೆ ತುಂಬಾ ಸಂತೋಷವಾಗಿದೆ.",
     what_i_help: "ಈ ಯೋಜನೆಯ ಬಗ್ಗೆ ನಿಮಗೆ ಸುಲಭವಾಗಿ ತಿಳಿಸಿಕೊಡುತ್ತೇನೆ.",
+    summary: "ಈ ಯೋಜನೆಗಳನ್ನು ನಿಮಗಾಗಿ ಸರಳವಾಗಿ ವಿವರಿಸುತ್ತೇನೆ.",
     next_step: "ನಮ್ಮ ತಂಡದ ಸಿಬ್ಬಂದಿಯೊಂದಿಗೆ ಮಾತನಾಡಲು ಬಯಸುವಿರಾ? ಅಥವಾ ಬೇಕಾದ ದಾಖಲೆಗಳನ್ನು ವಿವರಿಸಬೇಕೆ?"
   },
   marathi: {
     greeting: "नमस्कार! मला तुमची मदत करायला खूप आनंद होत आहे.",
     what_i_help: "मी तुम्हाला या योजनेबद्दल अत्यंत सोप्या भाषेत माहिती देतो.",
+    summary: "मी या योजनेचे स्पष्टीकरण आपल्यासाठी खूप सोप्या भाषेत करीन.",
     next_step: "तुम्हाला आमच्या टीममधील सहकाऱ्याशी बोलायला आवडेल का? की लागणारी कागदपत्रे समजावून सांगू?"
   }
 };
 
 function App() {
+
+
   const [messages, setMessages] = useState([
     {
       sender: 'assistant',
@@ -122,7 +129,132 @@ function App() {
     }
   ]);
   const [inputText, setInputText] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('english');
+  const [selectedLanguage, setSelectedLanguage] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.localStorage.getItem('egov_language') || 'english';
+    }
+    return 'english';
+  });
+
+  const LANGUAGE_CODES = {
+    english: 'en-IN',
+    hindi: 'hi-IN',
+    tamil: 'ta-IN',
+    telugu: 'te-IN',
+    kannada: 'kn-IN',
+    marathi: 'mr-IN'
+  };
+
+  const LANGUAGE_CODE_TO_NAME = {
+    'en-IN': 'english',
+    'hi-IN': 'hindi',
+    'ta-IN': 'tamil',
+    'te-IN': 'telugu',
+    'kn-IN': 'kannada',
+    'mr-IN': 'marathi'
+  };
+
+  const UI_TEXTS = {
+    english: {
+      subtitle: 'Simple Government Help for Seniors (65+)',
+      chatTitle: 'Your Friendly Chatbot Assistant',
+      exploreTitle: 'Explore Government Schemes',
+      checkDocuments: 'Check your documents:',
+      showSteps: 'Show Me Simple Steps',
+      commonQuestions: 'Common Questions',
+      supportTitle: 'Confused or stuck? No worries!',
+      supportText: 'Click the red call button below to talk directly with a friendly guide who will fill the form for you.',
+      callButton: 'Call Helper Toll-Free: 1800-200-3333'
+    },
+    kannada: {
+      subtitle: 'ಮುಖ್ಯವಾಗಿ ಹಿರಿಯ ನಾಗರಿಕರಿಗೆ ಸರಳ ಸರ್ಕಾರಿ ಸಹಾಯ',
+      chatTitle: 'ನಿಮ್ಮ ಸ್ನೇಹಿ ಚಾಟ್‌ಬಾಟ್ ಸಹಾಯಕ',
+      exploreTitle: 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ',
+      checkDocuments: 'ನಿಮ್ಮ ದಾಖಲೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ:',
+      showSteps: 'ನನಗೆ ಸರಳ ಹಂತಗಳನ್ನು ತೋರಿಸಿ',
+      commonQuestions: 'ಸಾಮಾನ್ಯ ಪ್ರಶ್ನೆಗಳು',
+      supportTitle: 'ಗೊಂದಲವಿದೆಯೆ? ಚಿಂತೆ ಬೇಡ!',
+      supportText: 'ನೀವು ಬಲಗಿನ ಕೆಂಪು ಕರೆ ಬಟನ್ ಒತ್ತಿ ಮತ್ತು ದಯವಿಟ್ಟು ತಿಳಿದಿರುವ ಸಹಾಯಕರನ್ನು ಸಂಪರ್ಕಿಸಿ.',
+      callButton: 'ಉಚಿತ ಕರೆದಿರಿ: 1800-200-3333'
+    }
+  };
+
+  const getUIText = (key, lang) => {
+    const textSet = UI_TEXTS[lang] || UI_TEXTS.english;
+    return textSet[key] || UI_TEXTS.english[key] || '';
+  };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('egov_language', selectedLanguage);
+    }
+  }, [selectedLanguage]);
+
+  const getInitialAssistantData = (lang) => {
+    const defaultData = {
+      greeting: "Namaste! I am your E-Governance helpdesk assistant. I am here to help you get pension, healthcare, and document services easily.",
+      whatIHelp: "Ask me a question or click one of the big colored cards below to start!",
+      steps: [],
+      summary: "I will make government rules super easy for you. No technical jargon, just simple steps.",
+      nextStep: "Would you like to ask about pension schemes, health cards, or savings schemes?"
+    };
+
+    if (lang === 'english' || !TRANSLATED_TEMPLATES[lang]) {
+      return defaultData;
+    }
+
+    const template = TRANSLATED_TEMPLATES[lang];
+    return {
+      greeting: template.greeting,
+      whatIHelp: template.what_i_help,
+      steps: [],
+      summary: template.summary,
+      nextStep: template.next_step
+    };
+  };
+
+  const getChatPlaceholder = (lang) => {
+    switch (lang) {
+      case 'hindi': return "अपना प्रश्न यहाँ टाइप करें (उदा: पेंशन कैसे लें?)...";
+      case 'tamil': return "உங்கள் கேள்வியை இங்கே টাইப் செய்யவும் (எ.கா: ஓய்வு 계획ம் எப்படி பெறுவது?)...";
+      case 'telugu': return "మీ ప్రశ్నను ఇక్కడ టైప్ చేయండి (ఉదా: పెన్షన్ ఎలా పొందాలి?)...";
+      case 'kannada': return "ಇಲ್ಲಿ ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಟೈಪ್ ಮಾಡಿ (ಉದಾ: ಪಿಂಚನ್ ಹೇಗೆ ಪಡೆಯುವುದು?)...";
+      case 'marathi': return "इथे आपला प्रश्न टाइप करा (उदा.: पेन्शन कसे घ्यावे?)...";
+      default: return "Type your question here (e.g. How to get pension?)...";
+    }
+  };
+
+  const getMicStatusText = (lang, listening) => {
+    if (listening) {
+      switch (lang) {
+        case 'hindi': return "सुन रहा हूँ... अब अपनी प्रश्न बोलें.";
+        case 'tamil': return "கேட்கிறேன்... இப்போது உங்கள் கேள்வியைப் பேசுங்கள்.";
+        case 'telugu': return "వింటుతున్నాం... ఇప్పుడు మీ ప్రశ్నను మాట్లాడండి.";
+        case 'kannada': return "ಲಿಸನಿಂಗ್... ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಈಗ ಹೇಳಿ.";
+        case 'marathi': return "ऐकत आहे... आता आपला प्रश्न बोला.";
+        default: return "Listening... Speak your question now.";
+      }
+    }
+
+    switch (lang) {
+      case 'hindi': return "लाल माइक्रोफ़ोन दबाएँ और प्राकृतिक रूप से बोलें!";
+      case 'tamil': return "பார்வையான சிவப்பு மைக்ரோஃபோனைக் கிளிக் செய்து பேசவும்!";
+      case 'telugu': return "రక్తాన్ని నొక్కి ప్రశ్నను సహజంగా మాట్లాడండి!";
+      case 'kannada': return "ದೊಡ್ಡ ಕೆಂಪು ಮೈಕ್ ಅನ್ನು ಒತ್ತಿ ಮತ್ತು ಸ್ವಾಭಾವಿಕವಾಗಿ ಮಾತನಾಡಿ!";
+      case 'marathi': return "मोठ्या लाल माइकवर टॅप करा आणि नैसर्गिकपणे बोला!";
+      default: return "Tap the big red mic and speak naturally!";
+    }
+  };
+
+  useEffect(() => {
+    setMessages(prev => prev.map((msg, index) => {
+      if (index !== 0 || msg.sender !== 'assistant' || !msg.isStructured) return msg;
+      return {
+        ...msg,
+        data: getInitialAssistantData(selectedLanguage)
+      };
+    }));
+  }, [selectedLanguage]);
   const [textSizeMode, setTextSizeMode] = useState('normal'); // 'normal', 'lg', 'xl'
   const [themeMode, setThemeMode] = useState('light');
   const [isListening, setIsListening] = useState(false);
@@ -293,12 +425,16 @@ function App() {
 
     try {
       // Attempt backend FastAPI server call
-      const response = await axios.post('http://localhost:8000/api/chat', {
+      const response = await axios.post('/api/chat', {
         query: textToSend,
-        language: selectedLanguage
+        language: LANGUAGE_CODES[selectedLanguage] || 'en-IN'
       });
       
       const result = response.data;
+      const serverLang = LANGUAGE_CODE_TO_NAME[result.language] || selectedLanguage;
+      if (serverLang !== selectedLanguage) {
+        setSelectedLanguage(serverLang);
+      }
       parseAndAddAssistantMessage(result.response);
     } catch (error) {
       console.warn("Backend server not reached. Processing local semantic matching.", error);
@@ -313,7 +449,7 @@ function App() {
     const qLower = query.toLowerCase();
     let schemeKey = null;
 
-    if (qLower.includes("pension") || qLower.includes("old age") || qLower.includes("money") || qLower.includes("paise")) {
+    if (qLower.includes("pension") || qLower.includes("old age") || qLower.includes("money") || qLower.includes("paise") || qLower.includes("pension beku") || qLower.includes("pension chahiye")) {
       if (qLower.includes("lic") || qLower.includes("savings") || qLower.includes("pmvvy") || qLower.includes("vaya")) {
         schemeKey = "pmvvy";
       } else {
@@ -323,44 +459,73 @@ function App() {
       schemeKey = "pmjay";
     }
 
-    const scheme = LOCAL_SCHEMES_DB[schemeKey];
+    const localizedFallback = {
+      english: {
+        greeting: "Hello! I want to make sure I understand your query correctly.",
+        help: "I can help you with pensions, free golden health cards, and LIC monthly savings.",
+        step: "STEP 1: Pick a topic to start\n        - Ask: 'I want to apply for a pension' or 'Explain Ayushman card'.\n        - Say: 'Tell me about pensions'",
+        summary: "I've offered you topics you can ask me about.",
+        next: "Would you like me to connect you with our call support? Or should I explain pensions?"
+      },
+      kannada: {
+        greeting: "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ನಿಖರವಾಗಿ ತಿಳಿದುಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸುತ್ತಿದ್ದೇನೆ.",
+        help: "ನಾನು ನಿಮಗೆ ಪಿಂಚಣಿ, ಉಚಿತ ಗೋಲ್ಡ್ ಹೆಲ್ತ್ ಕಾರ್ಡ್ ಮತ್ತು LIC ಉಳಿತಾಯ ಯೋಜನೆಗಳ ಬಗ್ಗೆ ಸಹಾಯ ಮಾಡುತ್ತೇನೆ.",
+        step: "ಹಂತ 1: ಪ್ರಾರಂಭಿಸಲು ಒಂದು ವಿಷಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ\n        - ಕೇಳಿ: 'ನನಗೆ ಪಿಂಚಣಿ ಬಗ್ಗೆ ಮಾಹಿತಿ ಬೇಕಿದೆ' ಅಥವಾ 'ಆಯುಷ್ಮಾನ್ ಕಾರ್ಡ್ ಬಗ್ಗೆ ವಿವರಿಸಿ'.\n        - ಹೇಳಿ: 'ನನಗೆ ಪಿಂಚಣಿ ಬಗ್ಗೆ ತಿಳಿಸಿ'",
+        summary: "ನಾನು ನಿಮಗೆ ಕೇಳಲಾದ ವಿಷಯಗಳನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ವಿವರಿಸುತ್ತೇನೆ.",
+        next: "ನಾನು ನಿಮಗೆ ನಮ್ಮ ಸಹಾಯವಾಣಿ ಮೂಲಕ ಸಂಪರ್ಕಿಸಬಹುದೇ? ಅಥವಾ ನಾನು ಪಿಂಚಣಿ ಪ್ರಕ್ರಿಯೆಯನ್ನು ವಿವರಿಸೋಣ?"
+      },
+      hindi: {
+        greeting: "नमस्ते! मैं आपकी बात सही से समझना चाह रहा हूँ।",
+        help: "मैं आपको पेंशन, मुफ्त गोल्डन हेल्थ कार्ड, और LIC बचत योजनाओं में मदद कर सकता हूँ।",
+        step: "चरण 1: एक विषय चुनें\n        - पूछें: 'मुझे पेंशन के लिए आवेदन करना है' या 'आयुष्मान कार्ड के बारे में बताओ'.\n        - कहें: 'मुझे पेंशन के बारे में बताएं'",
+        summary: "मैंने आपको उन विषयों की जानकारी दी जिनके बारे में आप पूछ सकते हैं।",
+        next: "क्या मैं आपको हमारी हेल्पडेस्क कॉल के साथ कनेक्ट करूं? या क्या मैं पेंशन समझाऊँ?"
+      }
+    };
+
     if (!scheme) {
-      // General Inquiry Fallback Response
-      return `GREETING: "Hello! I want to make sure I understand your query correctly."\n\n` +
-             `WHAT I'LL HELP: "I can help you with pensions, free golden health cards, and LIC monthly savings."\n\n` +
-             `STEP 1: Pick a topic to start\n` +
-             `        - Ask: 'I want to apply for a pension' or 'Explain Ayushman card'.\n` +
-             `        - Say: 'Tell me about pensions'\n\n` +
-             `SUMMARY: "I've offered you topics you can ask me about."\n\n` +
-             `NEXT STEP: "Would you like me to connect you with our call support? Or should I explain pensions?"`;
+      const fallback = localizedFallback[lang] || localizedFallback.english;
+      return `GREETING: "${fallback.greeting}"\n\n` +
+             `WHAT I'LL HELP: "${fallback.help}"\n\n` +
+             `${fallback.step}\n\n` +
+             `SUMMARY: "${fallback.summary}"\n\n` +
+             `NEXT STEP: "${fallback.next}"`;
     }
 
-    // Standard structural response formatting
-    const name = scheme.simplified_name;
-    let greeting = "Hello! I am so happy to help you find information about the government's schemes today.";
-    let whatIHelp = `I will show you simple, easy steps to understand and apply for the ${name}.`;
-    let nextStep = "Would you like to speak with a helpful member of our team? Or should I explain the documents you need?";
-    let summary = `Once you complete these simple steps, you will get your ${name} set up safely!`;
+    const schemeName = scheme.simplified_name;
+    const messages = {
+      english: {
+        greeting: "Hello! I am so happy to help you find information about the government's schemes today.",
+        help: `I will show you simple, easy steps to understand and apply for the ${schemeName}.`,
+        summary: `Once you complete these simple steps, you will get your ${schemeName} set up safely!`,
+        next: "Would you like to speak with a helpful member of our team? Or should I explain the documents you need?"
+      },
+      kannada: {
+        greeting: "ನಮಸ್ಕಾರ! ನಿಮಗೆ ಸಹಾಯ ಮಾಡಲು ನನಗೆ ತುಂಬಾ ಸಂತೋಷವಾಗಿದೆ.",
+        help: `ನಾನು ನಿಮಗೆ ${schemeName} ಬಗ್ಗೆ ಸುಲಭವಾಗಿ ತಿಳಿಸಿಕೊಡುತ್ತೇನೆ.`,
+        summary: `ನೀವು ಈ ಸರಳ ಹಂತಗಳನ್ನು ಪೂರ್ಣಗೊಳಿಸಿದ ಮೇಲೆ, ನಿಮ್ಮ ${schemeName} ಸುರಕ್ಷಿತವಾಗಿ ಸಿದ್ಧವಾಗುತ್ತದೆ!`,
+        next: "ನಾನು ನಿಮಗೆ ನಮ್ಮ ಸಹಾಯವಾಣಿ ಮೂಲಕ ಸಂಪರ್ಕಿಸಬಹುದೇ? ಅಥವಾ ನಾನು ಪಿಂಚಣಿ ಪ್ರಕ್ರಿಯೆಯನ್ನು ವಿವರಿಸೋಣ?"
+      },
+      hindi: {
+        greeting: "नमस्ते! मुझे आपकी मदद करने में बहुत खुशी हो रही है।",
+        help: `मैं आपको ${schemeName} के बारे में सरल तरीके से समझाऊंगा।`,
+        summary: `इन सरल चरणों को पूरा करने पर आपका ${schemeName} सुरक्षित रूप से तैयार हो जाएगा।`,
+        next: "क्या आप हमारी टीम के किसी सदस्य से बात करना चाहेंगे? या क्या मैं आपको प्रक्रिया समझाऊँ?"
+      }
+    };
 
-    // Translate if non-english
-    if (lang !== 'english' && TRANSLATED_TEMPLATES[lang]) {
-      greeting = TRANSLATED_TEMPLATES[lang].greeting;
-      whatIHelp = `${TRANSLATED_TEMPLATES[lang].what_i_help} (${name})`;
-      nextStep = TRANSLATED_TEMPLATES[lang].next_step;
-      summary = `Success! (${name})`;
-    }
-
+    const base = messages[lang] || messages.english;
     const stepsStr = scheme.steps.map(s => 
       `STEP ${s.step_number}: ${s.action}\n` +
       `        - ${s.explanation}\n` +
       `        - ${s.voice_command}`
     ).join("\n\n");
 
-    return `GREETING: "${greeting}"\n\n` +
-           `WHAT I'LL HELP: "${whatIHelp}"\n\n` +
+    return `GREETING: "${base.greeting}"\n\n` +
+           `WHAT I'LL HELP: "${base.help}"\n\n` +
            `${stepsStr}\n\n` +
-           `SUMMARY: "${summary}"\n\n` +
-           `NEXT STEP: "${nextStep}"`;
+           `SUMMARY: "${base.summary}"\n\n` +
+           `NEXT STEP: "${base.next}"`;
   };
 
   // Helper to parse the raw structured text (with sections) and store as clean state object
@@ -413,7 +578,7 @@ function App() {
             <div className="logo-badge" aria-hidden="true">सेवा</div>
             <div>
               <h1 className="header-title">E-Governance Helpdesk</h1>
-              <p className="header-subtitle">Simple Government Help for Seniors (65+)</p>
+              <p className="header-subtitle">{getUIText('subtitle', selectedLanguage)}</p>
             </div>
           </div>
           
@@ -469,10 +634,8 @@ function App() {
         <section className="card" aria-labelledby="chat-title">
           <h2 id="chat-title" className="card-title">
             <UserCheck size={28} className="icon-main" />
-            <span>Your Friendly Chatbot Assistant</span>
+            <span>{getUIText('chatTitle', selectedLanguage)}</span>
           </h2>
-
-          <div className="chat-container">
             {/* Messages area */}
             <div className="chat-history">
               {messages.map((msg, index) => (
@@ -506,7 +669,7 @@ function App() {
               <input 
                 type="text" 
                 className="chat-input"
-                placeholder="Type your question here (e.g. How to get pension?)..."
+                placeholder={getChatPlaceholder(selectedLanguage)}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') handleSendQuery(); }}
@@ -533,13 +696,12 @@ function App() {
                 {isListening ? <Mic size={40} /> : <MicOff size={40} />}
               </button>
               <p className="mic-status-text">
-                {isListening ? "Listening... Speak your question now." : "Tap the big red mic and speak naturally!"}
+                {getMicStatusText(selectedLanguage, isListening)}
               </p>
               <div className="voice-debug" aria-live="polite" style={{ fontSize: '12px', color: voiceDebug.ok ? 'transparent' : '#ef4444', marginTop: '6px' }}>
                 {!voiceDebug.ok ? `Voice error (${voiceDebug.error}): ${voiceDebug.message}` : ''}
               </div>
             </div>
-          </div>
         </section>
 
         {/* Right Side: Quick Document Guide & Common Suggestions */}
@@ -549,7 +711,7 @@ function App() {
           <section className="card" aria-labelledby="schemes-title">
             <h2 id="schemes-title" className="card-title">
               <Bookmark size={28} />
-              <span>Explore Government Schemes</span>
+              <span>{getUIText('exploreTitle', selectedLanguage)}</span>
             </h2>
 
             {/* Sub-navigation tabs for schemes */}
@@ -591,7 +753,7 @@ function App() {
                 <div style={{ marginTop: '12px' }}>
                   <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '18px', fontWeight: '600' }}>
                     <CheckSquare size={20} />
-                    <span>Check your documents:</span>
+                    <span>{getUIText('checkDocuments', selectedLanguage)}</span>
                   </h4>
                   <div className="doc-checklist">
                     {currentScheme.documents.map((doc, idx) => (
@@ -615,7 +777,7 @@ function App() {
                   style={{ backgroundColor: 'var(--primary)', color: 'white', border: 'none', justifyContent: 'center' }}
                   onClick={() => handleSendQuery(`Explain ${currentScheme.simplified_name}`)}
                 >
-                  Show Me Simple Steps
+                  {getUIText('showSteps', selectedLanguage)}
                 </button>
               </div>
             )}
@@ -625,7 +787,7 @@ function App() {
           <section className="card" aria-labelledby="suggestions-title">
             <h2 id="suggestions-title" className="card-title">
               <HelpCircle size={28} />
-              <span>Common Questions</span>
+              <span>{getUIText('commonQuestions', selectedLanguage)}</span>
             </h2>
             <div className="suggestions-list" role="list">
               {SUGGESTIONS.map((sug, idx) => (
@@ -647,8 +809,8 @@ function App() {
       <footer style={{ marginTop: '48px' }}>
         <div className="support-banner">
           <div className="support-details">
-            <p className="support-title">Confused or stuck? No worries!</p>
-            <p style={{ fontSize: '17px' }}>Click the red call button below to talk directly with a friendly guide who will fill the form for you.</p>
+            <p className="support-title">{getUIText('supportTitle', selectedLanguage)}</p>
+            <p style={{ fontSize: '17px' }}>{getUIText('supportText', selectedLanguage)}</p>
           </div>
           <button 
             className="call-btn"
@@ -656,7 +818,7 @@ function App() {
             aria-label="Call senior help desk agent now"
           >
             <Phone size={24} />
-            <span>Call Helper Toll-Free: 1800-200-3333</span>
+            <span>{getUIText('callButton', selectedLanguage)}</span>
           </button>
         </div>
       </footer>

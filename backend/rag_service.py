@@ -3,8 +3,51 @@ import os
 import re
 from typing import Dict, Any, List
 
+from utils.translator import translate_text
+
 # Load schemes from the local file
 SCHEMES_FILE = os.path.join(os.path.dirname(__file__), "data", "schemes.json")
+
+LANGUAGE_NAME_TO_CODE = {
+    'english': 'en-IN',
+    'hindi': 'hi-IN',
+    'kannada': 'kn-IN',
+    'tamil': 'ta-IN',
+    'telugu': 'te-IN',
+    'marathi': 'mr-IN',
+    'en': 'en-IN',
+    'hi': 'hi-IN',
+    'kn': 'kn-IN',
+    'ta': 'ta-IN',
+    'te': 'te-IN',
+    'mr': 'mr-IN',
+    'en-in': 'en-IN',
+    'hi-in': 'hi-IN',
+    'kn-in': 'kn-IN',
+    'ta-in': 'ta-IN',
+    'te-in': 'te-IN',
+    'mr-in': 'mr-IN'
+}
+
+LANGUAGE_CODE_TO_NAME = {v: k for k, v in LANGUAGE_NAME_TO_CODE.items() if '-' in v}
+
+def normalize_language(lang: str) -> str:
+    if not lang:
+        return 'english'
+    canonical = str(lang).strip().lower()
+    canonical = canonical.replace('_', '-')
+    if canonical in LANGUAGE_NAME_TO_CODE:
+        code = LANGUAGE_NAME_TO_CODE[canonical]
+        return {
+            'en-IN': 'english',
+            'hi-IN': 'hindi',
+            'kn-IN': 'kannada',
+            'ta-IN': 'tamil',
+            'te-IN': 'telugu',
+            'mr-IN': 'marathi'
+        }.get(code, 'english')
+    return 'english'
+
 
 def load_schemes() -> List[Dict[str, Any]]:
     try:
@@ -194,77 +237,19 @@ TRANSLATIONS = {
 
 def translate_response(english_response: str, lang: str, scheme: Dict[str, Any]) -> str:
     """
-    Translates response by pulling translated items from SCHEME_TRANSLATIONS.
-    Supports Hindi, Tamil, Telugu, Kannada, Marathi for premium local voice fidelity.
+    Fully translate the English response into the requested target language.
     """
-    lang = lang.lower()
-    if lang not in TRANSLATIONS:
+    normalized_lang = normalize_language(lang)
+    target_code = LANGUAGE_NAME_TO_CODE.get(normalized_lang, 'en-IN')
+    if target_code == 'en-IN':
         return english_response
-        
-    from backend.translations import SCHEME_TRANSLATIONS
-    scheme_id = scheme.get("id")
-    
-    if not scheme_id or scheme_id not in SCHEME_TRANSLATIONS or lang not in SCHEME_TRANSLATIONS[scheme_id]:
-        # Fall back to base translations
-        t = TRANSLATIONS[lang]
-        name = scheme.get("simplified_name", scheme.get("name"))
-        greeting = t["greeting"]
-        what_i_help = f"{t['what_i_help']} ({name})"
-        
-        step_texts = []
-        for step in scheme.get("steps", []):
-            num = step["step_number"]
-            act = step["action"]
-            exp = step["explanation"]
-            step_text = (
-                f"STEP {num}: {act}\n"
-                f"        - {exp}\n"
-                f"        - {step['voice_command']}"
-            )
-            step_texts.append(step_text)
-            
-        steps_joined = "\n\n".join(step_texts)
-        summary = f"Success! ({name})"
-        next_step = t["next_step"]
-    else:
-        # Full dynamic regional translation matching voice synthesizers!
-        st = SCHEME_TRANSLATIONS[scheme_id][lang]
-        t = TRANSLATIONS[lang]
-        
-        name = st["simplified_name"]
-        greeting = t["greeting"]
-        what_i_help = f"{t['what_i_help']} ({name})"
-        
-        step_texts = []
-        for idx, step in enumerate(st["steps"]):
-            num = idx + 1
-            act = step["action"]
-            exp = step["explanation"]
-            voice = step["voice_command"]
-            step_text = (
-                f"STEP {num}: {act}\n"
-                f"        - {exp}\n"
-                f"        - {voice}"
-            )
-            step_texts.append(step_text)
-            
-        steps_joined = "\n\n".join(step_texts)
-        summary = st["summary"]
-        next_step = t["next_step"]
-        
-    return (
-        f"GREETING: \"{greeting}\"\n\n"
-        f"WHAT I'LL HELP: \"{what_i_help}\"\n\n"
-        f"{steps_joined}\n\n"
-        f"SUMMARY: \"{summary}\"\n\n"
-        f"NEXT STEP: \"{next_step}\""
-    )
+    return translate_text(english_response, target_code)
 
 def query_helpdesk(query: str, preferred_lang: str = None) -> Dict[str, Any]:
     schemes = load_schemes()
     
-    # Detect language
-    lang = preferred_lang if preferred_lang else detect_language(query)
+    # Determine target conversation language
+    lang = normalize_language(preferred_lang if preferred_lang else detect_language(query))
     
     # Parse intent
     intent_data = parse_intent(query, lang)
@@ -295,8 +280,11 @@ def query_helpdesk(query: str, preferred_lang: str = None) -> Dict[str, Any]:
                 f"SUMMARY: \"Awaiting your specific update details.\"\n\n"
                 f"NEXT STEP: \"Or say: 'Call human' to speak to our friendly support team directly.\""
             )
+        final_response = response
+        if lang != 'english':
+            final_response = translate_response(response, lang, scheme)
         return {
-            "response": response,
+            "response": final_response,
             "intent": intent_data["intent"],
             "confidence": intent_data["confidence"],
             "language": lang.upper(),

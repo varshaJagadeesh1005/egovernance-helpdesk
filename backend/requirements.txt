@@ -1,7 +1,6 @@
-fastapi
-uvicorn
+flask
+flask-cors
+langdetect
+deep-translator
+gTTS
 pydantic
-langchain
-langchain-openai
-python-dotenv
-openai
