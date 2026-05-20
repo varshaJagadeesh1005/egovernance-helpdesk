@@ -1,10 +1,13 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_from_directory
 from flask_cors import CORS
 from utils.language_detector import detect_language
 from utils.translator import translate_text
 from utils.speech_helper import sanitize_for_speech
 import traceback
 import json
+import os
+
+STATIC_FOLDER = os.path.join(os.path.dirname(__file__), 'frontend_dist')
 
 try:
     from rag_service import query_helpdesk
@@ -25,7 +28,7 @@ app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app)
 
-@app.route('/', methods=['GET'])
+@app.route('/api/status', methods=['GET'])
 def read_root():
     content = json.dumps({"message": "Welcome to the E-Governance Helpdesk API for Senior Citizens"}, ensure_ascii=False)
     return Response(content, mimetype='application/json'), 200
@@ -116,5 +119,12 @@ def chat_endpoint():
         traceback.print_exc()
         return Response(json.dumps({"error": str(e)}), status=500, mimetype='application/json')
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    if path != '' and os.path.exists(os.path.join(STATIC_FOLDER, path)):
+        return send_from_directory(STATIC_FOLDER, path)
+    return send_from_directory(STATIC_FOLDER, 'index.html')
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=False)
