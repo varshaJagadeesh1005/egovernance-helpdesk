@@ -11,8 +11,12 @@ FROM python:3.12-slim
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 
-COPY backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt ./backend/requirements.txt
+# Fail fast if the requirements file was not copied correctly
+RUN test -f ./backend/requirements.txt \
+  && ls -la ./backend/requirements.txt \
+  && pip install --no-cache-dir -r ./backend/requirements.txt
+
 
 COPY backend/ ./backend/
 COPY --from=frontend-builder /app/frontend/dist ./backend/frontend_dist
