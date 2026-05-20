@@ -425,7 +425,7 @@ function App() {
 
     try {
       // Attempt backend FastAPI server call
-      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const apiUrl = import.meta.env.VITE_API_URL || 'https://egovernance-helpdesk3.onrender.com';
       const response = await axios.post(`${apiUrl}/api/chat`, {
         query: textToSend,
         language: LANGUAGE_CODES[selectedLanguage] || 'en-IN'
